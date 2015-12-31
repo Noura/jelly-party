@@ -29,10 +29,6 @@ io.sockets.on('connection', function (client) {
     client.broadcast.emit('move', message);
   });
 
-   client.on('silent',function(){
-	client.broadcast.emit('silent',client.id);
-   });
-
    client.on('disconnect', function(){
      io.sockets.emit('close', client.id);
    });

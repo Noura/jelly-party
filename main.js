@@ -21,14 +21,6 @@ function updateSynths(){
             coef = SMOOTHING_COEFFICIENT,
             synthArgs;
 
-        if(!synth.playing) {
-            synths[cid].coords.x = synths[cid].coords.y = null;
-            $('#synth_'+cid).css({
-                'opacity' : '0.2'
-            });
-            continue;
-        }
-
         if(!synth.started){
             synth.started = true;
         }
@@ -131,8 +123,6 @@ var touchActivate = function(event){
 
 var touchDeactivate = function(){
   pressed=false;
-  socket.emit('silent',{state:"stop"});
-  synths[client_id].playing = false;
 }
 
 //
@@ -173,11 +163,6 @@ socket.on('connect',function(){
 
 });
 
-socket.on('silent',function(id){
-  console.log(id);
-  synths[id].playing = false;
-});
-
 socket.on('move', function (data) {
   playSynth(data);
 });
@@ -196,7 +181,6 @@ var playSynth = function(data){
       synth.dest.x = data.x;
       synth.dest.y = data.y;
       synth.color = data.col;
-      synth.playing = true;
   }
 };
 
@@ -224,7 +208,6 @@ function prepSynths(){
 
   return {
       started: false,
-      playing: false,  // false on touchDeactivate
 
       // dest contains the destination coordinates the server gave us for this
       // node. these are updated by use interaction / move messages from server.
