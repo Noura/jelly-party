@@ -12,31 +12,6 @@ var THROTTLE_MS = 50,  // only emit on socket once per this many ms
     // it is the jumpier throttled move messages will appear.
     SMOOTHING_COEFFICIENT = 0.3; // valid values: (0-1]
 
-var checkFeatureSupport = function(){
-  try{
-    window.AudioContext = window.AudioContext||window.webkitAudioContext;
-    context = new AudioContext();
-
-    var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-    if (iOS) {
-        $("#fun").prepend("<p id='initialize'>tap to initialize</p>");
-        window.addEventListener('touchend', function() {
-            var buffer = context.createBuffer(1, 1, 22050);
-            var source = context.createBufferSource();
-            source.buffer = buffer;
-            source.connect(context.destination);
-            source.start(0);
-            $("#initialize").remove();
-        }, false);
-    }
-
-
-  }
-  catch (err){
-    alert("this uses the web audio API, try opening it in google chrome \n\n <3 whichlight" );
-  }
-}
-
 // updates synth location, pitch & filter frequency on every animation
 // frame. this is the only place that synth.coords is written to.
 function updateSynths(){
@@ -47,7 +22,6 @@ function updateSynths(){
             synthArgs;
 
         if(!synth.playing) {
-            synth.gainNode.gain.value=0;
             synths[cid].coords.x = synths[cid].coords.y = null;
             $('#synth_'+cid).css({
                 'opacity' : '0.2'
@@ -57,7 +31,6 @@ function updateSynths(){
 
         if(!synth.started){
             synth.started = true;
-            synth.oscillator.start(0);
         }
 
         // if coords are null, set them to synth.dest. this prevents the synth
@@ -71,9 +44,6 @@ function updateSynths(){
         synth.coords.y = synth.dest.y * coef + (1 - coef) * synth.coords.y;
 
         synthArgs = synthmap(synth.coords.x, synth.coords.y);
-        synth.oscillator.frequency.value = synthArgs[0];
-        synth.filter.frequency.value = synthArgs[1];
-        synth.gainNode.gain.value=(0.2+synth.coords.y/3);
 
         $('#synth_'+cid).css({
             'left' : (synth.coords.x*$(window).width()-20) + 'px',
@@ -86,8 +56,6 @@ function updateSynths(){
 }
 
 $(document).ready(function() {
-  checkFeatureSupport();
-  alert("Turn the volume up and touch the screen. Share the URL with a friend to hear their sounds. Let's have a wild synth party! \n\n <3 @whichlight");
 
   var color = hsvToRgb(Math.random(),1,1);
   col = 'rgb(' + color.join(',') + ')';
@@ -236,8 +204,6 @@ socket.on('close', function (id) {
   console.log('disconnect ' + id);
   if(id in synths){
     if(synths[id].started){
-        synths[id].oscillator.stop(0);
-        synths[id].oscillator.disconnect(0);
     }
   }
   $('#synth_'+id).remove();
@@ -255,22 +221,6 @@ function sendData(data) {
 
 
 function prepSynths(){
-  var oscillator = context.createOscillator(); //need perens here
-  oscillator.type="square";
-  oscillator.frequency.value=_x || 0;
-  //filter
-  var filter = context.createBiquadFilter();
-  filter.type="lowpass";
-  filter.frequency.value=_y || 0;
-
-  //volume
-  var gainNode = context.createGain();
-  gainNode.gain.value=0.05;
-
-  //connect it all
-  oscillator.connect(filter);
-  filter.connect(gainNode);
-  gainNode.connect(context.destination);
 
   return {
       started: false,
@@ -285,9 +235,6 @@ function prepSynths(){
       coords: {x: null, y: null},
 
       color: null,
-      oscillator: oscillator,
-      filter: filter,
-      gainNode: gainNode
   };
 }
 
