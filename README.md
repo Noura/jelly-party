@@ -28,4 +28,4 @@ author
 Noura Howell, http://nourahowell.com
 
 This is adapted from [dancey-dots](https://github.com/whichlight/dancey-dots) by
-Kawandeep Virdee, @whichlight, http://blog.whichlight.com,
+Kawandeep Virdee, @whichlight, http://blog.whichlight.com
