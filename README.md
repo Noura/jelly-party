@@ -4,15 +4,16 @@ WIP code example for Code 510, a programming after school activity with high sch
 
 how to use
 ----------
+make sure you have node and npm installed, [instructions here](https://docs.npmjs.com/getting-started/installing-node)
+
 do the commands
 
-`git clone https://github.com/Noura/jelly-party`
-
-`cd jelly-party`
-
-`npm install`
-
-`node server.js`
+```
+git clone https://github.com/Noura/jelly-party
+cd jelly-party
+npm install
+node server.js
+```
 
 open a bunch of tabs in your browser, or have friends do this too, and go to http://[localhost or your local IP]:8000/
 
@@ -26,6 +27,5 @@ author
 ------
 Noura Howell, http://nourahowell.com
 
-This is adapted from dancey-dots by
+This is adapted from [dancey-dots](https://github.com/whichlight/dancey-dots) by
 Kawandeep Virdee, @whichlight, http://blog.whichlight.com,
-https://github.com/whichlight/dancey-dots
