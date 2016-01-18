@@ -26,6 +26,6 @@ author
 ------
 Noura Howell, http://nourahowell.com
 
-This is adapted from work by
+This is adapted from dancey-dots by
 Kawandeep Virdee, @whichlight, http://blog.whichlight.com,
 https://github.com/whichlight/dancey-dots
