@@ -27,5 +27,5 @@ author
 Noura Howell, http://nourahowell.com
 
 This is adapted from work by
-Kawandeep Virdee, @whichlight, blog.whichlight.com
+Kawandeep Virdee, @whichlight, http://blog.whichlight.com,
 https://github.com/whichlight/dancey-dots
