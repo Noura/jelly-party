@@ -5,7 +5,9 @@ WIP code example for Code 510, a programming after school activity with high sch
 how to use
 ----------
 clone the git repo
+
 cd into it
+
 `node server.js`
 
 open a bunch of tabs in your browser, or have friends do this too, and go to http://<localhost or your local IP>:8000/
